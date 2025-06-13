@@ -1,0 +1,39 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environment
+nlpenv/
+env/
+venv/
+.venv/
+ENV/
+.ENV/
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# VS Code settings
+.vscode/
+
+# MacOS
+.DS_Store
+
+# Python egg and distribution info
+*.egg-info/
+dist/
+build/
+
+# Log files
+*.log
+
+# Spyder settings (optional)
+.spyderproject
+.spyproject
+
+# PyCharm settings (optional)
+.idea/
+
+# Environment variable files (optional)
+.env
