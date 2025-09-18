@@ -1,0 +1,17 @@
+Sentence,Entity,Label
+Google has hired John Smith as a Software Engineer in California.,Google,ORG
+Google has hired John Smith as a Software Engineer in California.,John Smith,PERSON
+Google has hired John Smith as a Software Engineer in California.,California,GPE
+Mary Johnson joined Microsoft as a Data Scientist in Seattle.,Mary Johnson,PERSON
+Mary Johnson joined Microsoft as a Data Scientist in Seattle.,Microsoft,ORG
+Mary Johnson joined Microsoft as a Data Scientist in Seattle.,Data Scientist,ORG
+Mary Johnson joined Microsoft as a Data Scientist in Seattle.,Seattle,GPE
+Amazon appointed David Lee to lead its Cloud Computing division.,Amazon,ORG
+Amazon appointed David Lee to lead its Cloud Computing division.,David Lee,PERSON
+Amazon appointed David Lee to lead its Cloud Computing division.,Cloud Computing,PERSON
+Elon Musk announced a new project at Tesla headquarters in Texas.,Elon Musk,PERSON
+Elon Musk announced a new project at Tesla headquarters in Texas.,Tesla,ORG
+Elon Musk announced a new project at Tesla headquarters in Texas.,Texas,GPE
+IBM is collaborating with Alice Brown to develop AI solutions.,IBM,ORG
+IBM is collaborating with Alice Brown to develop AI solutions.,Alice Brown,PERSON
+IBM is collaborating with Alice Brown to develop AI solutions.,AI,GPE
