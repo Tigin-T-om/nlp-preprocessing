@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>PoeticAI ✨</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      /* --- Base Styles & Variables for easy theme changes --- */
+      :root {
+        --primary-color: #e0b4ff; /* Lighter violet for contrast */
+        --secondary-color: #a77ffb; /* Another shade of violet */
+        --background-start: #2a0050; /* Deep dark violet */
+        --background-end: #4c007a; /* Slightly lighter dark violet */
+        --text-color: #f0f0f0; /* Light text for dark background */
+        --card-background: rgba(40, 0, 70, 0.7); /* Darker, semi-transparent card */
+        --shadow-color: rgba(0, 0, 0, 0.3); /* Darker shadow */
+        --border-color: rgba(255, 255, 255, 0.2); /* Lighter border for visibility */
+        --font-family: "Poppins", sans-serif;
+      }
+
+      /* --- General Body Styling --- */
+      body {
+        background: linear-gradient(
+          135deg,
+          var(--background-start) 0%,
+          var(--background-end) 100%
+        );
+        font-family: var(--font-family);
+        margin: 0;
+        padding: 20px;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--text-color);
+      }
+
+      /* --- Main Container Card --- */
+      .container {
+        max-width: 550px;
+        width: 100%;
+        background: var(--card-background);
+        border-radius: 24px;
+        box-shadow: 0 10px 30px var(--shadow-color);
+        padding: 40px;
+        border: 1px solid var(--border-color);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+      }
+
+      /* --- Header --- */
+      h2 {
+        text-align: center;
+        font-weight: 600;
+        font-size: 2em;
+        background: linear-gradient(
+          135deg,
+          var(--primary-color),
+          var(--secondary-color)
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        margin: 0 0 30px 0;
+      }
+
+      /* --- Form Styling --- */
+      form {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+      }
+
+      label {
+        font-size: 1.1em;
+        font-weight: 500;
+        color: var(--primary-color);
+      }
+
+      /* --- Input Field --- */
+      input[type="text"] {
+        padding: 15px;
+        border: 1px solid var(--border-color);
+        border-radius: 12px;
+        font-size: 1em;
+        font-family: var(--font-family);
+        outline: none;
+        transition: all 0.3s ease;
+        background: rgba(255, 255, 255, 0.1); /* Slightly transparent white for input */
+        color: var(--text-color);
+      }
+
+      input[type="text"]::placeholder {
+        color: rgba(255, 255, 255, 0.6); /* Lighter placeholder text */
+      }
+
+      input[type="text"]:focus {
+        border-color: var(--secondary-color);
+        box-shadow: 0 0 0 4px rgba(167, 127, 251, 0.2);
+      }
+
+      /* --- Generate Button --- */
+      button {
+        background: linear-gradient(
+          135deg,
+          var(--primary-color),
+          var(--secondary-color)
+        );
+        color: #fff;
+        border: none;
+        border-radius: 12px;
+        padding: 15px;
+        font-size: 1.1em;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      }
+
+      button:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 25px rgba(224, 180, 255, 0.2);
+      }
+
+      /* --- Poem Display Section --- */
+      .poem-section {
+        margin-top: 40px;
+        background: rgba(255, 255, 255, 0.08); /* Lighter background for the poem section */
+        border-radius: 16px;
+        padding: 25px;
+        border: 1px solid var(--border-color);
+        animation: fadeIn 0.5s ease-out;
+      }
+
+      h3 {
+        color: var(--primary-color);
+        margin: 0 0 15px 0;
+        font-weight: 600;
+        font-size: 1.4em;
+      }
+
+      pre {
+        font-size: 1.1em;
+        color: var(--text-color);
+        white-space: pre-wrap;
+        word-break: break-word;
+        line-height: 1.7;
+        background: none;
+        border: none;
+        margin: 0;
+        font-family: var(--font-family);
+      }
+
+      /* Fade-in animation for the poem */
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h2>PoeticAI ✨</h2>
+      <form method="post">
+        <label for="prompt">What inspires your poem?</label>
+        <input
+          type="text"
+          name="prompt"
+          id="prompt"
+          required
+          placeholder="e.g., a quiet forest, city lights, echoes of laughter"
+        />
+        <button type="submit">Weave with Words</button>
+      </form>
+
+      {% if poem %}
+      <div class="poem-section">
+        <h3>Your Creation:</h3>
+        <pre>{{ poem }}</pre>
+      </div>
+      {% endif %}
+    </div>
+  </body>
+</html>

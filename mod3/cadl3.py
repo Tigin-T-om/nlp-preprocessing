@@ -1,86 +1,45 @@
-# CADL3: Named Entity Recognition (NER) with spaCy
-
 import spacy
+from spacy import displacy
 import pandas as pd
 
-# -----------------------------
-# Step 1: Load spaCy Pre-trained Model
-# -----------------------------
 nlp = spacy.load("en_core_web_sm")
 
-# -----------------------------
-# Step 2: Sample Dataset (Unstructured Text)
-# -----------------------------
-corpus = [
-    "Google has hired John Smith as a Software Engineer in California.",
-    "Mary Johnson joined Microsoft as a Data Scientist in Seattle.",
-    "Amazon appointed David Lee to lead its Cloud Computing division.",
-    "Elon Musk announced a new project at Tesla headquarters in Texas.",
-    "IBM is collaborating with Alice Brown to develop AI solutions."
-]
+text = """
+Google is hiring a Data Scientist in Bangalore.
+The role requires knowledge of Python and Machine Learning.
+John Doe previously worked at Microsoft and will be presenting his research
+at the AI Conference 2025 in San Francisco.
+"""
 
-# -----------------------------
-# Step 3: Perform NER on the Dataset
-# -----------------------------
-entities = []
-for sentence in corpus:
-    parsed_doc = nlp(sentence)
-    for ent in parsed_doc.ents:
-        entities.append([sentence, ent.text, ent.label_])
+doc = nlp(text)
 
-# Convert to DataFrame for visualization
-df_entities = pd.DataFrame(entities, columns=["Sentence", "Entity", "Label"])
+# Extract all entities
+print("Named Entities:")
+for ent in doc.ents:
+    print((ent.text, ent.label_))
 
-print("========== Named Entities ==========")
-print(df_entities)
+# Collect persons and orgs
+persons = [ent.text for ent in doc.ents if ent.label_ == "PERSON"]
+orgs = [ent.text for ent in doc.ents if ent.label_ == "ORG"]
 
-# -----------------------------
-# Step 4: Extract Persons & Organizations
-# -----------------------------
-person_org = []
+# --- Fix: align lists by length ---
+max_len = max(len(persons), len(orgs))
 
-for sentence in corpus:
-    parsed_doc = nlp(sentence)
-    persons = [ent.text for ent in parsed_doc.ents if ent.label_ == "PERSON"]
-    orgs = [ent.text for ent in parsed_doc.ents if ent.label_ == "ORG"]
+# pad shorter list with empty strings
+persons += [""] * (max_len - len(persons))
+orgs += [""] * (max_len - len(orgs))
 
-    # Pair each person with each org in the sentence
-    for person in persons:
-        for org in orgs:
-            person_org.append([person, org])
+# Create dataframe
+df = pd.DataFrame({"Person": persons, "Organization": orgs})
+print("\nStructured Table:")
+print(df)
 
-# Convert to DataFrame
-df_person_org = pd.DataFrame(person_org, columns=["Person", "Organization"])
+# Save table
+df.to_csv("entities.csv", index=False)
 
-print("\n========== Persons & Organizations ==========")
-print(df_person_org)
+# Generate HTML
+html = displacy.render(doc, style="ent", page=True)
+with open("ner_entities.html", "w", encoding="utf-8") as f:
+    f.write(html)
 
-# -----------------------------
-# Step 5: (Optional) Extract Persons, Orgs & Locations
-# -----------------------------
-structured_info = []
-
-for sentence in corpus:
-    parsed_doc = nlp(sentence)
-    persons = [ent.text for ent in parsed_doc.ents if ent.label_ == "PERSON"]
-    orgs = [ent.text for ent in parsed_doc.ents if ent.label_ == "ORG"]
-    locations = [ent.text for ent in parsed_doc.ents if ent.label_ in ["GPE", "LOC"]]
-
-    for person in persons:
-        for org in orgs:
-            for loc in locations if locations else ["N/A"]:
-                structured_info.append([person, org, loc])
-
-df_full = pd.DataFrame(structured_info, columns=["Person", "Organization", "Location"])
-
-print("\n========== Persons, Organizations & Locations ==========")
-print(df_full)
-
-# -----------------------------
-# Step 6: Save results to CSV
-# -----------------------------
-df_entities.to_csv("named_entities.csv", index=False)
-df_person_org.to_csv("person_organization.csv", index=False)
-df_full.to_csv("person_org_location.csv", index=False)
-
-print("\n✅ Results saved as CSV files")
+print("\n✅ 'entities.csv' and 'ner_entities.html' generated.")
